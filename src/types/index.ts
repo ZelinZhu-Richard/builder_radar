@@ -1,6 +1,7 @@
 export * from "./alert";
 export * from "./app";
 export * from "./event";
+export * from "./intake";
 export * from "./item";
 export * from "./opportunity";
 export * from "./section";
