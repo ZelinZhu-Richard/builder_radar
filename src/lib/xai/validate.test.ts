@@ -17,6 +17,10 @@ test("validateXSearchProviderResult skips malformed items and keeps valid candid
       },
       {
         externalId: "x-1",
+        quotedPostId: "x-root",
+        repliedToPostId: "x-parent",
+        sharedPostId: "x-shared",
+        parentThreadId: "thread-1",
         authorHandle: "demo",
         authorName: "Demo",
         authorProfileUrl: "not-a-url",
@@ -36,6 +40,10 @@ test("validateXSearchProviderResult skips malformed items and keeps valid candid
   assert.equal(result.issues.length, 2);
   assert.equal(result.items[0]?.item.authorProfileUrl, null);
   assert.equal(result.items[0]?.item.publishedAt, null);
+  assert.equal(result.items[0]?.item.quotedPostId, "x-root");
+  assert.equal(result.items[0]?.item.repliedToPostId, "x-parent");
+  assert.equal(result.items[0]?.item.sharedPostId, "x-shared");
+  assert.equal(result.items[0]?.item.parentThreadId, "thread-1");
   assert.deepEqual(result.items[0]?.item.laneHints, ["ai"]);
   assert.deepEqual(result.items[0]?.item.linkedUrls, ["https://example.com/doc"]);
   assert.equal(result.items[0]?.item.postType, "original");

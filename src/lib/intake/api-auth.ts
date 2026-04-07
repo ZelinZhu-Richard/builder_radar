@@ -1,6 +1,6 @@
 import type { NextRequest } from "next/server";
 
-export function assertIntakeAdmin(request: NextRequest) {
+export function assertAdminAccess(request: NextRequest) {
   const configuredKey = process.env.INTAKE_ADMIN_KEY;
 
   if (!configuredKey && process.env.NODE_ENV !== "production") {
@@ -24,3 +24,5 @@ export function assertIntakeAdmin(request: NextRequest) {
     throw error;
   }
 }
+
+export const assertIntakeAdmin = assertAdminAccess;

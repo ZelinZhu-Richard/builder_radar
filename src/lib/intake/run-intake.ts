@@ -313,6 +313,7 @@ export async function runIntake(
               query: executableQuery,
               trustedAccountsByHandle,
               collectedAt,
+              config,
             }),
           queryLogger,
         });
@@ -363,6 +364,7 @@ export async function runIntake(
               validatedItem,
               query: executableQuery,
               collectedAt,
+              config,
             }),
           queryLogger,
         });

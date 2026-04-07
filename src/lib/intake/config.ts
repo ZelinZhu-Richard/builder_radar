@@ -1,10 +1,15 @@
 import type { SignalLane } from "@/types";
-import { assertLiveIntakeEnv, getIntakeLogLevel } from "./env";
+import {
+  assertLiveIntakeEnv,
+  getIntakeLogLevel,
+  getIntakeRawPayloadMode,
+} from "./env";
 import type { IntakeQueryPreset, IntakeRuntimeConfig, IntakeWindow } from "./types";
 
 const DEFAULT_REFRESH_TARGET_HOURS = 2;
 const DEFAULT_LOOKBACK_HOURS = 8;
 const DEFAULT_MAX_ITEMS_PER_QUERY = 5;
+const DEFAULT_RAW_PAYLOAD_MAX_BYTES = 16_384;
 const DEFAULT_XAI_BASE_URL = "https://api.x.ai/v1";
 const DEFAULT_XAI_MODEL = "grok-4-1-fast";
 
@@ -115,6 +120,13 @@ export function getIntakeConfig(): IntakeRuntimeConfig {
       process.env.NODE_ENV !== "production",
     ),
     logLevel: getIntakeLogLevel(),
+    rawPayload: {
+      mode: getIntakeRawPayloadMode(),
+      maxBytes: parseInteger(
+        process.env.INTAKE_RAW_PAYLOAD_MAX_BYTES,
+        DEFAULT_RAW_PAYLOAD_MAX_BYTES,
+      ),
+    },
     xai: {
       apiKey: process.env.XAI_API_KEY,
       baseUrl: process.env.XAI_BASE_URL ?? DEFAULT_XAI_BASE_URL,
@@ -154,6 +166,10 @@ export function snapshotRuntimeConfig(config: IntakeRuntimeConfig) {
     maxItemsPerQuery: config.maxItemsPerQuery,
     useMockProvider: config.useMockProvider,
     logLevel: config.logLevel,
+    rawPayload: {
+      mode: config.rawPayload.mode,
+      maxBytes: config.rawPayload.maxBytes,
+    },
     xai: {
       baseUrl: config.xai.baseUrl,
       model: config.xai.model,

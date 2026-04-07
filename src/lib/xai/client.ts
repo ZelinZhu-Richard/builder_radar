@@ -22,6 +22,10 @@ const X_SEARCH_SCHEMA = {
         additionalProperties: false,
         properties: {
           externalId: { type: "string" },
+          quotedPostId: { type: "string" },
+          repliedToPostId: { type: "string" },
+          sharedPostId: { type: "string" },
+          parentThreadId: { type: "string" },
           authorHandle: { type: "string" },
           authorName: { type: "string" },
           authorProfileUrl: { type: "string" },
@@ -158,6 +162,7 @@ function buildXSearchPrompt(query: IntakeExecutableQuery) {
     "Use X search and return discrete X posts, not trends, not merged events, and not summaries.",
     "Favor first-hand releases, implementation detail, workflows, opportunities, benchmarks, and credible tactical analysis.",
     "Exclude memes, jokes, vague hype, generic founder chatter, and duplicated low-value noise.",
+    "If available, include quotedPostId, repliedToPostId, sharedPostId, and parentThreadId for relationship tracking.",
     `Return at most ${query.maxItems} posts.`,
     `Search instruction: ${query.queryText}`,
   ].join(" ");

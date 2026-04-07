@@ -39,12 +39,20 @@ INTAKE_LOOKBACK_HOURS=8
 INTAKE_MAX_ITEMS_PER_QUERY=5
 INTAKE_USE_MOCK=true
 INTAKE_LOG_LEVEL=debug
+INTAKE_RAW_PAYLOAD_MODE=summary
+INTAKE_RAW_PAYLOAD_MAX_BYTES=16384
 INTAKE_ADMIN_KEY=
 ```
+
+Raw payload storage defaults to sanitized summaries. Full payload capture is opt-in:
+- `INTAKE_RAW_PAYLOAD_MODE=summary` stores a compact debug summary in `raw_payload_json`
+- `INTAKE_RAW_PAYLOAD_MODE=full` stores full provider items only when they fit under `INTAKE_RAW_PAYLOAD_MAX_BYTES`
+- oversized payloads fall back to summary storage with `payloadTruncated=true`
 
 ## Database Setup
 
 - Run the migration in `supabase/migrations/202604051000_signal_intake_engine.sql`
+- Run the follow-up hardening migration in `supabase/migrations/202604060003_event_intelligence_followup.sql`
 - Apply the trusted-account seed in `supabase/seed.sql`
 
 ## Internal Routes
@@ -110,7 +118,9 @@ If live mode is selected without `XAI_API_KEY`, intake fails fast before making 
    - query `partial` status vs full failure
    - inserted vs updated vs deduped counts
    - skipped malformed items and `skipped_count`
+   - stored quote, reply, share, and parent-thread IDs on `raw_items`
    - stored raw item URLs and author handles
+   - whether `raw_payload_json` stored a summary or capped full payload
    - extracted `raw_item_links`
 5. Use `GET /api/intake/raw-items?limit=20&recentHours=24` to inspect recent normalized items directly
 6. Optional filters:

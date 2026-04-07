@@ -3,6 +3,7 @@ import type { SourceKind, TrustTier } from "./source";
 
 export type IntakeSourceType = "x_post" | "web_result";
 export type IntakePlatform = "x" | "web";
+export type IntakeRawPayloadMode = "summary" | "full";
 
 export type IntakeRunType = "full" | "x_only" | "web_only" | "manual_replay";
 export type IntakeTriggerSource = "cron" | "manual" | "api" | "dev";
@@ -112,6 +113,10 @@ export interface RawItem {
   sourceType: IntakeSourceType;
   platform: IntakePlatform;
   externalId?: string | null;
+  quotedExternalId?: string | null;
+  repliedToExternalId?: string | null;
+  sharedExternalId?: string | null;
+  parentThreadExternalId?: string | null;
   dedupeKey: string;
   matchedTrustedAccountId?: string | null;
   authorHandle?: string | null;

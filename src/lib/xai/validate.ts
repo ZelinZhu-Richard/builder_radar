@@ -167,6 +167,10 @@ export function validateXSearchProviderResult(
       rawItemJson: rawItem,
       item: {
         externalId: asOptionalString(rawItem.externalId),
+        quotedPostId: asOptionalString(rawItem.quotedPostId),
+        repliedToPostId: asOptionalString(rawItem.repliedToPostId),
+        sharedPostId: asOptionalString(rawItem.sharedPostId),
+        parentThreadId: asOptionalString(rawItem.parentThreadId),
         authorHandle: asOptionalString(rawItem.authorHandle),
         authorName: asOptionalString(rawItem.authorName),
         authorProfileUrl: asOptionalValidUrl(rawItem.authorProfileUrl),

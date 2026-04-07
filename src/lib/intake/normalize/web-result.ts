@@ -1,9 +1,11 @@
 import type { ValidatedXaiWebSearchItem } from "@/lib/xai/types";
 import type {
   IntakeExecutableQuery,
+  IntakeRuntimeConfig,
   NormalizedRawItem,
   ValidatedProviderItem,
 } from "../types";
+import { buildStoredRawPayload } from "../raw-payload";
 import {
   buildLink,
   cleanText,
@@ -44,10 +46,12 @@ export function normalizeWebResult({
   validatedItem,
   query,
   collectedAt,
+  config,
 }: {
   validatedItem: ValidatedProviderItem<ValidatedXaiWebSearchItem>;
   query: IntakeExecutableQuery;
   collectedAt: Date;
+  config: IntakeRuntimeConfig;
 }): NormalizedRawItem {
   const { item: result, rawItemJson } = validatedItem;
   const normalizedUrl = normalizeUrl(result.url);
@@ -108,7 +112,20 @@ export function normalizeWebResult({
     isRepost: false,
     isQuote: false,
     isReply: false,
-    rawPayloadJson: rawItemJson,
+    rawPayloadJson: buildStoredRawPayload({
+      config: config.rawPayload,
+      rawItemJson,
+      summary: {
+        title: cleanText(result.title),
+        url: result.url,
+        domain: result.domain ?? null,
+        sourceName: cleanText(result.sourceName),
+        publishedAt: result.publishedAt ?? null,
+        linkedUrls: result.linkedUrls,
+        laneHints: result.laneHints,
+        relevanceNote: cleanText(result.relevanceNote),
+      },
+    }),
     metadataJson: {
       provider: "xai",
       searchTool: "web_search",

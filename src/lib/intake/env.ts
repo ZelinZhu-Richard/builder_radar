@@ -1,4 +1,5 @@
 import type { IntakeRuntimeConfig } from "./types";
+import type { IntakeRawPayloadMode } from "@/types";
 
 export type IntakeLogLevel = "silent" | "error" | "info" | "debug";
 
@@ -7,6 +8,11 @@ const VALID_LOG_LEVELS = new Set<IntakeLogLevel>([
   "error",
   "info",
   "debug",
+]);
+
+const VALID_RAW_PAYLOAD_MODES = new Set<IntakeRawPayloadMode>([
+  "summary",
+  "full",
 ]);
 
 export function getIntakeLogLevel(): IntakeLogLevel {
@@ -21,6 +27,16 @@ export function getIntakeLogLevel(): IntakeLogLevel {
   }
 
   return rawValue as IntakeLogLevel;
+}
+
+export function getIntakeRawPayloadMode(): IntakeRawPayloadMode {
+  const rawValue = process.env.INTAKE_RAW_PAYLOAD_MODE?.trim().toLowerCase();
+
+  if (!rawValue || !VALID_RAW_PAYLOAD_MODES.has(rawValue as IntakeRawPayloadMode)) {
+    return "summary";
+  }
+
+  return rawValue as IntakeRawPayloadMode;
 }
 
 export function assertLiveIntakeEnv(config: IntakeRuntimeConfig) {

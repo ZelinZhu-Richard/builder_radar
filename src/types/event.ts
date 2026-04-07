@@ -3,7 +3,7 @@ import type { Item } from "./item";
 import type { Opportunity } from "./opportunity";
 import type { Source } from "./source";
 
-export type EventStatus = "new" | "developing" | "steady";
+export type EventStatus = "new" | "developing" | "steady" | "archived";
 
 export interface EventScore {
   signal: number;

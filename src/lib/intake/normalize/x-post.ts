@@ -2,9 +2,11 @@ import type { TrustedAccount } from "@/types";
 import type { ValidatedXaiXSearchItem } from "@/lib/xai/types";
 import type {
   IntakeExecutableQuery,
+  IntakeRuntimeConfig,
   NormalizedRawItem,
   ValidatedProviderItem,
 } from "../types";
+import { buildStoredRawPayload } from "../raw-payload";
 import {
   buildLink,
   cleanText,
@@ -35,11 +37,13 @@ export function normalizeXPostResult({
   query,
   trustedAccountsByHandle,
   collectedAt,
+  config,
 }: {
   validatedItem: ValidatedProviderItem<ValidatedXaiXSearchItem>;
   query: IntakeExecutableQuery;
   trustedAccountsByHandle: Map<string, TrustedAccount>;
   collectedAt: Date;
+  config: IntakeRuntimeConfig;
 }): NormalizedRawItem {
   const { item: result, rawItemJson } = validatedItem;
   const matchedTrustedAccount = matchTrustedAccount(result, trustedAccountsByHandle);
@@ -84,6 +88,10 @@ export function normalizeXPostResult({
     sourceType: "x_post",
     platform: "x",
     externalId: result.externalId || null,
+    quotedExternalId: result.quotedPostId || null,
+    repliedToExternalId: result.repliedToPostId || null,
+    sharedExternalId: result.sharedPostId || null,
+    parentThreadExternalId: result.parentThreadId || null,
     dedupeKey: computeDedupeKey({
       sourceType: "x_post",
       externalId: result.externalId || null,
@@ -113,12 +121,33 @@ export function normalizeXPostResult({
     isRepost: result.postType === "repost",
     isQuote: result.postType === "quote",
     isReply: result.postType === "reply",
-    rawPayloadJson: rawItemJson,
+    rawPayloadJson: buildStoredRawPayload({
+      config: config.rawPayload,
+      rawItemJson,
+      summary: {
+        externalId: result.externalId ?? null,
+        quotedPostId: result.quotedPostId ?? null,
+        repliedToPostId: result.repliedToPostId ?? null,
+        sharedPostId: result.sharedPostId ?? null,
+        parentThreadId: result.parentThreadId ?? null,
+        authorHandle: result.authorHandle ?? null,
+        permalinkUrl: result.permalinkUrl,
+        publishedAt: result.publishedAt ?? null,
+        postType: result.postType,
+        linkedUrls: result.linkedUrls,
+        laneHints: result.laneHints,
+        relevanceNote: cleanText(result.relevanceNote),
+      },
+    }),
     metadataJson: {
       provider: "xai",
       searchTool: "x_search",
       querySource: query.querySource,
       postType: result.postType,
+      quotedPostId: result.quotedPostId ?? null,
+      repliedToPostId: result.repliedToPostId ?? null,
+      sharedPostId: result.sharedPostId ?? null,
+      parentThreadId: result.parentThreadId ?? null,
       relevanceNote: cleanText(result.relevanceNote),
       providerItemIndex: validatedItem.itemIndex,
     },

@@ -3,6 +3,7 @@ import type {
   IntakeIssueCode,
   IntakeIssueNote,
   IntakePlatform,
+  IntakeRawPayloadMode,
   IntakeQuerySource,
   IntakeQueryStatus,
   IntakeRunType,
@@ -24,6 +25,10 @@ export interface IntakeRuntimeConfig {
   maxItemsPerQuery: number;
   useMockProvider: boolean;
   logLevel: "silent" | "error" | "info" | "debug";
+  rawPayload: {
+    mode: IntakeRawPayloadMode;
+    maxBytes: number;
+  };
   xai: {
     apiKey?: string;
     baseUrl: string;
@@ -69,6 +74,10 @@ export interface NormalizedRawItem {
   sourceType: IntakeSourceType;
   platform: IntakePlatform;
   externalId?: string | null;
+  quotedExternalId?: string | null;
+  repliedToExternalId?: string | null;
+  sharedExternalId?: string | null;
+  parentThreadExternalId?: string | null;
   dedupeKey: string;
   matchedTrustedAccountId?: string | null;
   authorHandle?: string | null;

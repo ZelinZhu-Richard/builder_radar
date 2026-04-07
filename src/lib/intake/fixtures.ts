@@ -6,6 +6,10 @@ import type {
 export const MOCK_X_SEARCH_RESULTS: ValidatedXaiXSearchItem[] = [
   {
     externalId: "mock-x-trace-benchmark",
+    quotedPostId: null,
+    repliedToPostId: null,
+    sharedPostId: null,
+    parentThreadId: null,
     authorHandle: "modellab",
     authorName: "Model Lab Notes",
     authorProfileUrl: "https://x.com/modellab",
@@ -23,6 +27,10 @@ export const MOCK_X_SEARCH_RESULTS: ValidatedXaiXSearchItem[] = [
   },
   {
     externalId: "mock-x-memory-layer",
+    quotedPostId: null,
+    repliedToPostId: null,
+    sharedPostId: null,
+    parentThreadId: "thread-memory-layer",
     authorHandle: "systemsbuilder",
     authorName: "Systems Builder",
     authorProfileUrl: "https://x.com/systemsbuilder",
@@ -37,6 +45,10 @@ export const MOCK_X_SEARCH_RESULTS: ValidatedXaiXSearchItem[] = [
   },
   {
     externalId: "mock-x-quant-note",
+    quotedPostId: null,
+    repliedToPostId: null,
+    sharedPostId: null,
+    parentThreadId: null,
     authorHandle: "northset",
     authorName: "North Set Letter",
     authorProfileUrl: "https://x.com/northset",
@@ -51,6 +63,10 @@ export const MOCK_X_SEARCH_RESULTS: ValidatedXaiXSearchItem[] = [
   },
   {
     externalId: "mock-x-recovery-note",
+    quotedPostId: null,
+    repliedToPostId: null,
+    sharedPostId: null,
+    parentThreadId: null,
     authorHandle: "performancelab",
     authorName: "Performance Lab",
     authorProfileUrl: "https://x.com/performancelab",
@@ -65,6 +81,10 @@ export const MOCK_X_SEARCH_RESULTS: ValidatedXaiXSearchItem[] = [
   },
   {
     externalId: "mock-x-design-partner",
+    quotedPostId: null,
+    repliedToPostId: "mock-x-memory-layer",
+    sharedPostId: null,
+    parentThreadId: "thread-memory-layer",
     authorHandle: "systemsbuilder",
     authorName: "Systems Builder",
     authorProfileUrl: "https://x.com/systemsbuilder",

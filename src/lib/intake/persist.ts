@@ -38,6 +38,14 @@ function hasMaterialChanges(existing: RawItemRow, item: NormalizedRawItem) {
   return (
     normalizeComparableString(existing.external_id) !==
       normalizeComparableString(item.externalId) ||
+    normalizeComparableString(existing.quoted_external_id) !==
+      normalizeComparableString(item.quotedExternalId) ||
+    normalizeComparableString(existing.replied_to_external_id) !==
+      normalizeComparableString(item.repliedToExternalId) ||
+    normalizeComparableString(existing.shared_external_id) !==
+      normalizeComparableString(item.sharedExternalId) ||
+    normalizeComparableString(existing.parent_thread_external_id) !==
+      normalizeComparableString(item.parentThreadExternalId) ||
     existing.dedupe_key !== item.dedupeKey ||
     normalizeComparableString(existing.matched_trusted_account_id) !==
       normalizeComparableString(item.matchedTrustedAccountId) ||
@@ -81,6 +89,10 @@ function toRawItemInsert(
     source_type: item.sourceType,
     platform: item.platform,
     external_id: item.externalId ?? null,
+    quoted_external_id: item.quotedExternalId ?? null,
+    replied_to_external_id: item.repliedToExternalId ?? null,
+    shared_external_id: item.sharedExternalId ?? null,
+    parent_thread_external_id: item.parentThreadExternalId ?? null,
     dedupe_key: item.dedupeKey,
     matched_trusted_account_id: item.matchedTrustedAccountId ?? null,
     author_handle: item.authorHandle ?? null,
@@ -109,6 +121,10 @@ function toRawItemInsert(
 
 function toRawItemUpdate(item: NormalizedRawItem): RawItemUpdate {
   return {
+    quoted_external_id: item.quotedExternalId ?? null,
+    replied_to_external_id: item.repliedToExternalId ?? null,
+    shared_external_id: item.sharedExternalId ?? null,
+    parent_thread_external_id: item.parentThreadExternalId ?? null,
     matched_trusted_account_id: item.matchedTrustedAccountId ?? null,
     author_handle: item.authorHandle ?? null,
     author_normalized_handle: item.authorNormalizedHandle ?? null,

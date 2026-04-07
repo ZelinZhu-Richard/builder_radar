@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint src eslint.config.mjs next.config.ts postcss.config.mjs",
     "typecheck": "next typegen && tsc --noEmit",
-    "test:intake": "node --no-warnings --import ./src/test/register-path-aliases.mjs --test src/lib/intake/**/*.test.ts src/lib/xai/**/*.test.ts"
+    "test:intake": "node --no-warnings --import ./src/test/register-path-aliases.mjs --test src/lib/intake/**/*.test.ts src/lib/xai/**/*.test.ts src/lib/event-intelligence/**/*.test.ts",
+    "eval:event-intelligence": "node --no-warnings --import ./src/test/register-path-aliases.mjs ./src/lib/event-intelligence/evals/run.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.101.1",

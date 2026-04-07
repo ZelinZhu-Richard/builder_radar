@@ -35,6 +35,10 @@ export type XaiPostType = "original" | "repost" | "quote" | "reply";
 
 export interface ValidatedXaiXSearchItem {
   externalId: string | null;
+  quotedPostId: string | null;
+  repliedToPostId: string | null;
+  sharedPostId: string | null;
+  parentThreadId: string | null;
   authorHandle: string | null;
   authorName: string | null;
   authorProfileUrl: string | null;

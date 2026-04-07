@@ -15,6 +15,7 @@ const statusVariant = {
   new: "accent",
   developing: "info",
   steady: "neutral",
+  archived: "neutral",
 } as const;
 
 export function EventCard({
